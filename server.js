@@ -53,7 +53,8 @@ router.route('/post')
 
 // removed postjwt- not part of assignment requirements
 
-router.route('/signup', function(req, res) {
+router.route('/signup')
+    .post(function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please pass username and password.'});
     } else {
