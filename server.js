@@ -70,11 +70,12 @@ router.route('/signup')
     .all(function(req, res) {
             console.log(req.body);
             res = res.status(403);
-            res.send("Request type not supported SIGNUP ROUTE.");
+            res.send("Request type not supported Signup error.");
         }
     );
 
-router.route('/signin', function(req, res) {
+router.route('/signin', function(req, res)
+        .post(function(req, res) {
         var user = db.findOne(req.body.username);
 
         if (!user) {
