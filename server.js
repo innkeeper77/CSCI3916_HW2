@@ -74,7 +74,7 @@ router.route('/signup')
         }
     );
 
-router.route('/signin', function(req, res)
+router.route('/signin')
         .post(function(req, res) {
         var user = db.findOne(req.body.username);
 
