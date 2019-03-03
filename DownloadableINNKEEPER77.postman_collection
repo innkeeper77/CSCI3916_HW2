@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "d2a784bb-cec3-444e-90e7-018c8d882fca",
+		"name": "CSCI3916_HW2_INNKEEPER77",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5d84d49-2d37-4bb5-bb0e-a081a4bf4f61",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "innkeeper77",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "cu",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/signup",
+				"description": "Signup"
+			},
+			"response": []
+		},
+		{
+			"name": "Signup fail - wrong request type",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "innkeeper77",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "cu",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "Signin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5fb25fb-d45e-4f68-8d02-087173c12501",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.environment.set(\"session_token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "innkeeper77",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "cu",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/signin"
+			},
+			"response": []
+		},
+		{
+			"name": "Signin Fail - user not found",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "innkeeper79",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "cu",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/signin"
+			},
+			"response": []
+		},
+		{
+			"name": "Post: Save movie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "session_token",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+			},
+			"response": []
+		},
+		{
+			"name": "Get: Show movies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "session_token",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+			},
+			"response": []
+		},
+		{
+			"name": "Put: Update movie",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{session_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+			},
+			"response": []
+		},
+		{
+			"name": "Put: Update movie FAIL: BadAuth",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"description": "Junk value",
+						"key": "Authorization",
+						"type": "text",
+						"value": "16ewskflhj"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "testuser",
+						"password": "cu"
+					}
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"description": "// This needs basic auth instead",
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{session_token}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie FAIL BADAUTH",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "innkeeper77",
+						"password": "cu"
+					}
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"description": "// This needs basic auth instead",
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{session_token}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "https://csci3916hw2enelson.herokuapp.com/movies"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "402ef0cc-083a-4d62-807e-05671b3d5a2e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a4ab8eba-2e39-4a5e-ae70-b79ed4cb4358",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
