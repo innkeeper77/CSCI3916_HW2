@@ -43,21 +43,17 @@ router.route('/post')
             var o = getJSONObject(req);
             res.json(o);
         }
-    );
-
-router.route('/postjwt')
-    .post(authJwtController.isAuthenticated, function (req, res) {
+    )
+    .all(function (req, res) { // Using "all" to catch anything that gets to this point in the section. Eg here, only in the /post section. (Thanks Gavin for the pointer on this!)
             console.log(req.body);
-            res = res.status(200);
-            if (req.get('Content-Type')) {
-                console.log("Content-Type: " + req.get('Content-Type'));
-                res = res.type(req.get('Content-Type'));
-            }
-            res.send(req.body);
+            res = res.status(403);
+            res.send("Request type not supported.");
         }
     );
 
-router.post('/signup', function(req, res) {
+// removed postjwt- not part of assignment requirements
+
+router.route('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please pass username and password.'});
     } else {
@@ -69,10 +65,15 @@ router.post('/signup', function(req, res) {
         db.save(newUser); //no duplicate checking
         res.json({success: true, msg: 'Successful created new user.'});
     }
-});
+    })
+    .all(function(req, res) {
+            console.log(req.body);
+            res = res.status(403);
+            res.send("Request type not supported.");
+        }
+    );
 
-router.post('/signin', function(req, res) {
-
+router.route('/signin', function(req, res) {
         var user = db.findOne(req.body.username);
 
         if (!user) {
@@ -88,8 +89,90 @@ router.post('/signin', function(req, res) {
             else {
                 res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
             }
-        };
-});
+        }
+    })
+    .all(function(req, res) {
+            console.log(req.body);
+            res = res.status(403);
+            res.send("Request type not supported.");
+        }
+    );
+
+router.route('/movies') // /movies added per requirements. post, get, put, delete
+    .post(function(req, res) {
+            console.log(req.body);
+            res = res.status(200);
+            if (req.get('Content-Type')) {
+                console.log("Content-Type: " + req.get('Content-Type'));
+                res = res.type(req.get('Content-Type'));
+            }
+            res.send({status:200,
+                message:"movie Saved",
+                headers:req.headers,
+                query:req.query,
+                env:process.env.UNIQUE_KEY
+            });
+        }
+    )
+    .get(function(req, res) {
+            console.log(req.body);
+            res = res.status(200);
+            if (req.get('Content-Type')) {
+                console.log("Content-Type: " + req.get('Content-Type'));
+                res = res.type(req.get('Content-Type'));
+            }
+            res.send({status:200,
+                message:"GET movies",
+                headers:req.headers,
+                query:req.query,
+                env:process.env.UNIQUE_KEY
+            });
+        }
+    )
+    .put(authJwtController.isAuthenticated, function(req, res) {
+            console.log(req.body);
+            res = res.status(200);
+            if (req.get('Content-Type')) {
+                console.log("Content-Type: " + req.get('Content-Type'));
+                res = res.type(req.get('Content-Type'));
+            }
+            res.send({status:200,
+                message:"movie updated",
+                headers:req.headers,
+                query:req.query,
+                env:process.env.UNIQUE_KEY
+            });
+        }
+    )
+    .delete(authController.isAuthenticated, function(req, res) { // Read more on basic auth usage authjwt vs auth?
+            console.log(req.body);
+            res = res.status(200);
+            if (req.get('Content-Type')) {
+                console.log("Content-Type: " + req.get('Content-Type'));
+                res = res.type(req.get('Content-Type'));
+            }
+            res.send({status:200,
+                message:"movie deleted",
+                headers:req.headers,
+                query:req.query,
+                env:process.env.UNIQUE_KEY
+            });
+        }
+    )
+    .all(function (req, res) { // Using "all" to catch anything that gets to this point in the section. Eg here, only in the /post section. (Thanks Gavin for the pointer on this!)
+            console.log(req.body);
+            res = res.status(403);
+            res.send("Request type not supported.");
+        }
+    );
+
+router.route('/') // Final catch all
+    .all(function (req, res) {
+            console.log(req.body);
+            res = res.status(403);
+            res.send("Request type not supported.");
+        }
+    );
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
