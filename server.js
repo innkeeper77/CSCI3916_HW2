@@ -64,13 +64,13 @@ router.route('/signup')
         };
         // save the user
         db.save(newUser); //no duplicate checking
-        res.json({success: true, msg: 'Successful created new user.'});
+        res.json({success: true, msg: 'Successfully created new user.'});
     }
     })
     .all(function(req, res) {
             console.log(req.body);
             res = res.status(403);
-            res.send("Request type not supported.");
+            res.send("Request type not supported SIGNUP ROUTE.");
         }
     );
 
@@ -171,7 +171,7 @@ router.route('/') // Final catch all
     .all(function (req, res) {
             console.log(req.body);
             res = res.status(403);
-            res.send("Request type not supported.");
+            res.send("Request type not supported. CATCHALL");
         }
     );
 
